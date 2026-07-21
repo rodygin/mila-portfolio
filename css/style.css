@@ -319,7 +319,7 @@ a {
   border-color: transparent transparent transparent #fff;
 }
 
-.video-facade__iframe {
+.video-facade__player {
   position: absolute;
   inset: 0;
   width: 100%;

@@ -31,13 +31,33 @@ function initVideoFacades() {
   document.querySelectorAll("[data-video-play]").forEach((link) => {
     link.addEventListener("click", (event) => {
       const facade = link.closest("[data-video-facade]");
+
+      // Прямая ссылка на mp4-файл (например, с сайта телеканала) — плеер тут
+      // не iframe стороннего сервиса, а обычный html-тег <video>
+      if (facade.dataset.videoProvider === "file") {
+        const fileSrc = facade.dataset.videoSrc;
+        if (!fileSrc) return;
+
+        event.preventDefault();
+
+        const video = document.createElement("video");
+        video.className = "video-facade__player";
+        video.src = fileSrc;
+        video.controls = true;
+        video.autoplay = true;
+
+        facade.innerHTML = "";
+        facade.appendChild(video);
+        return;
+      }
+
       const src = getVideoEmbedSrc(facade);
       if (!src) return;
 
       event.preventDefault();
 
       const iframe = document.createElement("iframe");
-      iframe.className = "video-facade__iframe";
+      iframe.className = "video-facade__player";
       iframe.src = src;
       iframe.allow = "autoplay; encrypted-media; fullscreen; picture-in-picture";
       iframe.allowFullscreen = true;
@@ -63,6 +83,15 @@ function getVideoEmbedSrc(facade) {
     const id = facade.dataset.ytId;
     if (!id) return null;
     return `https://www.youtube.com/embed/${id}?autoplay=1&rel=0`;
+  }
+
+  if (provider === "rutube") {
+    const id = facade.dataset.rutubeId;
+    if (!id) return null;
+    // У приватных видео Rutube есть токен доступа (p) в ссылке — без него плеер не откроется
+    const p = facade.dataset.rutubeP;
+    const token = p ? `?p=${p}` : "";
+    return `https://rutube.ru/play/embed/${id}${token}`;
   }
 
   return null;
