@@ -35,6 +35,18 @@ a {
   text-decoration: none;
 }
 
+.visually-hidden {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+  border: 0;
+}
+
 .container {
   max-width: var(--container);
   margin: 0 auto;
@@ -205,33 +217,38 @@ a {
   padding: 96px 0;
 }
 
-.cases__grid {
+.case-section + .case-section {
+  margin-top: 56px;
+}
+
+.case-section__title {
+  font-size: clamp(28px, 4vw, 40px);
+  margin-bottom: 32px;
+}
+
+.case-section__grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
   gap: 24px;
 }
 
-.case-card {
+.case-example {
   background: var(--bg-alt);
   border-radius: var(--radius);
   overflow: hidden;
 }
 
-/* Прячем карточки для анимации появления только если JS работает.
-   Без JS (класс .js не добавлен) карточки видны сразу. */
-.js .case-card {
+/* Прячем блоки для анимации появления только если JS работает.
+   Без JS (класс .js не добавлен) блоки видны сразу. */
+.js .case-example {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.js .case-card.visible {
+.js .case-example.visible {
   opacity: 1;
   transform: translateY(0);
-}
-
-.case-card__image {
-  aspect-ratio: 4 / 3;
 }
 
 .ph--1 { background: linear-gradient(135deg, #7c5cff, #2b2b3d); }
@@ -239,20 +256,75 @@ a {
 .ph--3 { background: linear-gradient(135deg, #00d1b2, #2b2b3d); }
 .ph--4 { background: linear-gradient(135deg, #ffb020, #2b2b3d); }
 
-.case-card__body {
+.case-example__body {
   padding: 20px;
 }
 
-.case-card__tags {
+.case-example__tags {
   color: var(--accent);
   font-size: 14px;
+  /* Резерв под 2 строки, чтобы название проекта у всех блоков в ряду
+     начиналось на одной высоте, даже если тут одна строка текста */
+  min-height: 3em;
+}
+
+.case-example__project {
+  font-size: 16px;
   margin-top: 6px;
 }
 
-.case-card__desc {
-  color: var(--text-muted);
-  font-size: 14px;
-  margin-top: 10px;
+/* Превью видео VK/YouTube: постер + кнопка Play, по клику подменяется на плеер */
+
+.video-facade {
+  position: relative;
+  aspect-ratio: 4 / 3;
+}
+
+.video-facade__poster {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  /* contain, а не cover: картинка вписывается целиком, а не обрезается.
+     Пустые полосы сверху/снизу при этом показывают фон .ph--N карточки
+     (не чёрные полосы из самого превью) — так VK- и YouTube-превью
+     выглядят единообразно независимо от исходных пропорций видео. */
+  object-fit: contain;
+}
+
+.video-facade__link {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.video-facade__play {
+  position: relative;
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  background: rgba(0, 0, 0, 0.5);
+}
+
+.video-facade__play::before {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-40%, -50%);
+  border-style: solid;
+  border-width: 12px 0 12px 20px;
+  border-color: transparent transparent transparent #fff;
+}
+
+.video-facade__iframe {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  border: 0;
 }
 
 /* Skills */
@@ -350,7 +422,7 @@ a {
     animation: none;
   }
 
-  .js .case-card {
+  .js .case-example {
     opacity: 1;
     transform: none;
     transition: none;
