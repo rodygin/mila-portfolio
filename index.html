@@ -4,6 +4,15 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Мила Колганова — режиссёр монтажа</title>
+<meta name="description" content="Мила Колганова — режиссёр монтажа и руководитель видеопроизводства. Кейсы, навыки, контакты.">
+<meta property="og:title" content="Мила Колганова — режиссёр монтажа">
+<meta property="og:description" content="Монтаж, режиссура, прямой эфир, motion design.">
+<meta property="og:type" content="website">
+<!-- Favicon: встроенная SVG-иконка с буквой «М» на фиолетовом фоне, отдельный файл не нужен -->
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 32 32'%3E%3Crect width='32' height='32' rx='7' fill='%237c5cff'/%3E%3Ctext x='16' y='23' font-family='Segoe UI,sans-serif' font-size='20' font-weight='700' fill='%23fff' text-anchor='middle'%3E%D0%9C%3C/text%3E%3C/svg%3E">
+<!-- Помечаем страницу как "JS работает" ещё до загрузки основного скрипта.
+     Нужно, чтобы карточки кейсов прятались только когда анимация реально сможет их показать. -->
+<script>document.documentElement.classList.add("js");</script>
 <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
@@ -16,7 +25,7 @@
       <a href="#skills">Навыки</a>
       <a href="#contacts">Контакты</a>
     </nav>
-    <button class="burger" id="burger" aria-label="Открыть меню">
+    <button class="burger" id="burger" aria-label="Открыть меню" aria-expanded="false" aria-controls="nav">
       <span></span><span></span><span></span>
     </button>
   </div>
@@ -47,7 +56,7 @@
     </div>
   </section>
 
-  <div class="marquee">
+  <div class="marquee" aria-hidden="true">
     <div class="marquee__track">
       <span>МОНТАЖ</span><span>РЕЖИССУРА</span><span>ПРЯМОЙ ЭФИР</span><span>MOTION DESIGN</span>
       <span>ЦВЕТОКОРРЕКЦИЯ</span><span>DAVINCI RESOLVE</span><span>МОНТАЖ</span><span>РЕЖИССУРА</span>

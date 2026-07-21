@@ -14,11 +14,20 @@
   padding: 0;
 }
 
+html {
+  scroll-behavior: smooth;
+}
+
 body {
   background: var(--bg);
   color: var(--text);
   font-family: "Segoe UI", system-ui, sans-serif;
   line-height: 1.5;
+}
+
+/* Отступ, чтобы при переходе по якорям заголовок не прятался под липкую шапку (72px) */
+[id] {
+  scroll-margin-top: 88px;
 }
 
 a {
@@ -179,12 +188,17 @@ a {
   background: var(--bg-alt);
   border-radius: var(--radius);
   overflow: hidden;
+}
+
+/* Прячем карточки для анимации появления только если JS работает.
+   Без JS (класс .js не добавлен) карточки видны сразу. */
+.js .case-card {
   opacity: 0;
   transform: translateY(16px);
   transition: opacity 0.5s ease, transform 0.5s ease;
 }
 
-.case-card.visible {
+.js .case-card.visible {
   opacity: 1;
   transform: translateY(0);
 }
@@ -296,5 +310,22 @@ a {
 
   .footer__social {
     align-items: flex-start;
+  }
+}
+
+/* Отключаем движение для тех, кому анимация некомфортна (настройка ОС) */
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+
+  .marquee__track {
+    animation: none;
+  }
+
+  .js .case-card {
+    opacity: 1;
+    transform: none;
+    transition: none;
   }
 }

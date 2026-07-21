@@ -2,11 +2,16 @@ const burger = document.getElementById("burger");
 const nav = document.getElementById("nav");
 
 burger.addEventListener("click", () => {
-  nav.classList.toggle("open");
+  const isOpen = nav.classList.toggle("open");
+  // Сообщаем скринридерам, открыто меню или закрыто
+  burger.setAttribute("aria-expanded", isOpen);
 });
 
 nav.querySelectorAll("a").forEach((link) => {
-  link.addEventListener("click", () => nav.classList.remove("open"));
+  link.addEventListener("click", () => {
+    nav.classList.remove("open");
+    burger.setAttribute("aria-expanded", "false");
+  });
 });
 
 const cards = document.querySelectorAll(".case-card");
