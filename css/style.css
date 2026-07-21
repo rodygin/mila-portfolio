@@ -103,6 +103,33 @@ a {
   padding: 96px 0 64px;
 }
 
+.hero__inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 48px;
+}
+
+.hero__photo {
+  width: 320px;
+  height: 320px;
+  object-fit: cover;
+  border-radius: 16px;
+  flex-shrink: 0;
+}
+
+@media (max-width: 768px) {
+  .hero__inner {
+    flex-direction: column-reverse;
+  }
+
+  .hero__photo {
+    width: 100%;
+    max-width: 320px;
+    height: 320px;
+  }
+}
+
 .hero__title {
   font-size: clamp(40px, 8vw, 72px);
   font-weight: 800;
